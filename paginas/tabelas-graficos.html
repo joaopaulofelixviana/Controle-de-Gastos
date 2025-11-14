@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Transações</title>
+
+  <!-- Fontes e ícones -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+  <style>
+    :root{
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --muted: #6b7280;
+      --accent: #0b5fff; /* azul corporativo */
+      --accent-600: #074ad6;
+      --danger: #d14343;
+      --success: #2f9e44;
+      --glass: rgba(11,95,255,0.06);
+      --radius: 10px;
+      --max-width: 1100px;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      color-scheme: light;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background: linear-gradient(180deg,var(--bg),#eef2f7);
+      font-size:16px;
+      color:#111827;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:32px 16px;
+      display:flex;
+      justify-content:center;
+    }
+
+    .app{
+      width:100%;
+      max-width:var(--max-width);
+      background:transparent;
+    }
+
+    header.header{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      margin-bottom:20px;
+    }
+
+    .brand{
+      display:flex;align-items:center;gap:12px;
+    }
+    .logo{
+      width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-600));
+      display:grid;place-items:center;color:white;font-weight:700;font-size:20px;box-shadow:0 6px 18px rgba(11,95,255,0.12);
+    }
+    .brand h1{margin:0;font-size:20px}
+    .subtitle{color:var(--muted);font-size:13px}
+
+    .header-actions{margin-left:auto;display:flex;gap:8px;align-items:center}
+    .search{
+      display:flex;align-items:center;gap:8px;background:var(--card);padding:8px 12px;border-radius:999px;box-shadow:0 1px 4px rgba(16,24,40,0.06);
+    }
+    .search input{border:0;outline:none;background:transparent;width:220px}
+
+    .nav{
+      margin-top:8px;background:transparent;padding:12px 0 24px 0;display:flex;gap:12px;align-items:center;flex-wrap:wrap
+    }
+    .nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:8px}
+    .nav a.active{background:var(--card);color:var(--accent);box-shadow:0 6px 18px rgba(11,95,255,0.06);font-weight:600}
+
+    main.grid{
+      display:grid;grid-template-columns:380px 1fr;gap:20px;align-items:start
+    }
+
+    /* Form card */
+    .card{
+      background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 8px 24px rgba(16,24,40,0.06);
+    }
+    .card h2{margin:0 0 12px 0;font-size:18px}
+    .segmented{display:flex;background:var(--glass);border-radius:999px;padding:6px;width:100%;gap:6px}
+    .segmented button{flex:1;border:0;background:transparent;padding:10px 12px;border-radius:999px;font-weight:600;cursor:pointer}
+    .segmented button.active{background:linear-gradient(90deg,var(--accent),var(--accent-600));color:white;box-shadow:0 6px 16px rgba(11,95,255,0.18)}
+
+    form .row{display:flex;gap:10px;margin-top:12px}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    input[type=text], input[type=number], input[type=date], select{width:100%;padding:10px;border-radius:8px;border:1px solid #e6e9ef;background:white}
+
+    .actions{display:flex;gap:8px;margin-top:16px}
+    .btn{padding:10px 14px;border-radius:8px;border:0;cursor:pointer}
+    .btn.primary{background:var(--accent);color:white}
+    .btn.ghost{background:transparent;border:1px solid #e6e9ef}
+    .btn.danger{background:var(--danger);color:white}
+
+    /* Tables area */
+    .tables{display:flex;flex-direction:column;gap:18px}
+
+    .filters{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+    .filters input, .filters select{padding:8px;border-radius:8px;border:1px solid #e6e9ef;background:white}
+
+    .table-card{background:var(--card);padding:14px;border-radius:12px;box-shadow:0 8px 24px rgba(16,24,40,0.04)}
+    table{width:100%;border-collapse:collapse;font-size:14px}
+    thead th{ text-align:left;padding:8px 10px;color:var(--muted);font-weight:600;border-bottom:1px solid #eef2f7}
+    tbody td{padding:10px;border-bottom:1px dashed #f1f5f9}
+    tfoot td{padding:10px;font-weight:700}
+
+    .actions-cell{display:flex;gap:6px}
+    .chip{display:inline-block;padding:6px 8px;border-radius:999px;font-size:13px;background:#f3f6fb;color:var(--muted)}
+
+    .summary{display:flex;gap:12px;margin-top:14px}
+    .summary .item{flex:1;background:linear-gradient(180deg,#fff,#fbfdff);padding:12px;border-radius:10px;border:1px solid #f1f5f9}
+    .summary .item h4{margin:0;font-size:12px;color:var(--muted)}
+    .summary .amount{font-weight:700;font-size:18px;margin-top:6px}
+
+    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+
+    /* Responsive */
+    @media (max-width:980px){
+      main.grid{grid-template-columns:1fr;}
+      .search input{width:120px}
+    }
+    @media (max-width:420px){
+      body{padding:18px}
+      .logo{width:44px;height:44px}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="brand">
+        <div class="logo">SM</div>
+        <div>
+          <h1>Smart Money</h1>
+          <div class="subtitle">Gestão financeira</div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="search" role="search">
+          <span class="material-symbols-outlined" aria-hidden="true">search</span>
+          <input id="global-search" placeholder="Buscar transações..." />
+        </div>
+
+        <button class="btn ghost" id="btn-export" title="Exportar CSV">Exportar</button>
+        <button class="btn" id="btn-settings" title="Configurações">⚙️</button>
+      </div>
+    </header>
+
+    <nav class="nav" aria-label="Menu principal">
+      <a href="../index.html">Dashboard</a>
+      <a href="#" class="active">Transações</a>
+      <a href="perfil.html">Meu Perfil</a>
+      <a href="#">Mensagens</a>
+      <a href="#">Configurações</a>
+    </nav>
+
+    <main class="grid">
+      <!-- FORM AREA -->
+      <aside class="card" aria-labelledby="form-title">
+        <h2 id="form-title">Adicionar transação</h2>
+
+        <div class="segmented" role="tablist" aria-label="Tipo de transação">
+          <button id="seg-despesa" class="active" role="tab" aria-selected="true">Despesa</button>
+          <button id="seg-renda" role="tab">Renda</button>
+        </div>
+
+        <form id="form" novalidate>
+          <!-- DESPESA -->
+          <div id="panel-despesa" data-type="despesa">
+            <div class="row">
+              <div style="flex:1">
+                <label for="nome">Nome da despesa</label>
+                <input id="nome" name="nome" type="text" placeholder="Ex: Plano de internet" required>
+              </div>
+            </div>
+
+            <div class="row">
+              <div style="flex:1">
+                <label for="cat">Categoria</label>
+                <select id="cat" name="cat">
+                  <option value="lazer">Lazer</option>
+                  <option value="transporte">Transporte</option>
+                  <option value="moradia">Moradia</option>
+                  <option value="alimentacao">Alimentação</option>
+                </select>
+              </div>
+              <div style="width:120px">
+                <label for="valor">Valor (R$)</label>
+                <input id="valor" name="valor" type="number" step="0.01" min="0">
+              </div>
+            </div>
+
+            <div class="row">
+              <div style="flex:1">
+                <label for="pgto">Forma de pagamento</label>
+                <select id="pgto" name="pgto">
+                  <option>Cartão de Crédito</option>
+                  <option>Cartão de Débito</option>
+                  <option>Dinheiro</option>
+                  <option>Pix</option>
+                  <option>Boleto</option>
+                </select>
+              </div>
+              <div style="width:160px">
+                <label for="data">Data</label>
+                <input id="data" name="data" type="date">
+              </div>
+            </div>
+          </div>
+
+          <!-- RENDA -->
+          <div id="panel-renda" data-type="renda" hidden>
+            <div class="row">
+              <div style="flex:1">
+                <label for="fonte">Fonte de renda</label>
+                <input id="fonte" name="fonte" type="text" placeholder="Ex: Salário, Projeto">
+              </div>
+            </div>
+
+            <div class="row">
+              <div style="flex:1">
+                <label>Categoria</label>
+                <div style="display:flex;gap:8px;margin-top:6px">
+                  <label><input type="radio" name="catRenda" value="Renda Fixa"> Fixa</label>
+                  <label><input type="radio" name="catRenda" value="Renda Extra"> Extra</label>
+                </div>
+              </div>
+              <div style="width:160px">
+                <label for="valorRenda">Valor (R$)</label>
+                <input id="valorRenda" name="valorRenda" type="number" step="0.01" min="0">
+              </div>
+            </div>
+
+            <div class="row">
+              <div style="width:160px">
+                <label for="dataRenda">Data</label>
+                <input id="dataRenda" name="dataRenda" type="date">
+              </div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn primary" type="submit">Adicionar</button>
+            <button class="btn ghost" type="reset">Limpar</button>
+            <button class="btn danger" type="button" id="btn-clearAll">Limpar tudo</button>
+          </div>
+        </form>
+      </aside>
+
+      <!-- TABLES & GRAPHS -->
+      <section>
+        <div class="summary">
+          <div class="item">
+            <h4>Total de receitas</h4>
+            <div class="amount" id="tot-rendas">R$ 0,00</div>
+          </div>
+          <div class="item">
+            <h4>Total de despesas</h4>
+            <div class="amount" id="tot-despesas">R$ 0,00</div>
+          </div>
+          <div class="item">
+            <h4>Saldo</h4>
+            <div class="amount" id="saldo">R$ 0,00</div>
+          </div>
+        </div>
+
+        <div class="tables">
+          <div class="table-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <h3 style="margin:0">Despesas</h3>
+              <div class="filters">
+                <input id="filtro-nome" placeholder="Buscar por nome">
+                <select id="filtro-mes">
+                  <option value="">Mês</option>
+                  <option value="1">Jan</option>
+                  <option value="2">Fev</option>
+                  <option value="3">Mar</option>
+                  <option value="4">Abr</option>
+                </select>
+                <select id="filtro-cat">
+                  <option value="">Categoria</option>
+                  <option value="lazer">Lazer</option>
+                  <option value="transporte">Transporte</option>
+                </select>
+              </div>
+            </div>
+
+            <table id="tabela-gastos" aria-describedby="tabela-gastos-desc">
+              <caption id="tabela-gastos-desc" class="sr-only">Lista de despesas cadastradas</caption>
+              <thead>
+                <tr><th>Nome</th><th>Categoria</th><th>Data</th><th>Pagamento</th><th>Valor</th><th>Ações</th></tr>
+              </thead>
+              <tbody></tbody>
+              <tfoot>
+                <tr><td colspan="4">Total</td><td colspan="2" id="totalGastos">R$ 0,00</td></tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <div class="table-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <h3 style="margin:0">Rendas</h3>
+            </div>
+
+            <table id="tabela-rendas">
+              <thead><tr><th>Fonte</th><th>Categoria</th><th>Data</th><th>Valor</th><th>Ações</th></tr></thead>
+              <tbody></tbody>
+              <tfoot><tr><td colspan="3">Total</td><td colspan="2" id="totalRendas">R$ 0,00</td></tr></tfoot>
+            </table>
+          </div>
+        </div>
+
+      </section>
+    </main>
+
+    <footer>
+      Feito por <a href="https://github.com/joaopaulofelixviana">João Paulo</a> — © Smart Money
+    </footer>
+  </div>
+
+  <script>
+    // --- utilidades ---
+    const $ = q => document.querySelector(q);
+    const fmt = v => v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+
+    // segment control
+    const segDesp = $('#seg-despesa');
+    const segRend = $('#seg-renda');
+    const panelDesp = $('#panel-despesa');
+    const panelRend = $('#panel-renda');
+
+    segDesp.addEventListener('click',()=>{
+      segDesp.classList.add('active');segRend.classList.remove('active');
+      panelDesp.hidden=false;panelRend.hidden=true;
+    });
+    segRend.addEventListener('click',()=>{
+      segRend.classList.add('active');segDesp.classList.remove('active');
+      panelRend.hidden=false;panelDesp.hidden=true;
+    });
+
+    // state in localStorage
+    const STORAGE_KEY = 'smartmoney:transacoes';
+    const load = ()=> JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    const save = (arr)=> localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+
+    const form = $('#form');
+    const tbodyGastos = document.querySelector('#tabela-gastos tbody');
+    const tbodyRendas = document.querySelector('#tabela-rendas tbody');
+
+    function render(){
+      const all = load();
+      tbodyGastos.innerHTML=''; tbodyRendas.innerHTML='';
+      let sumG=0, sumR=0;
+      all.forEach((t, i)=>{
+        const tr = document.createElement('tr');
+        if(t.tipo==='despesa'){
+          tr.innerHTML = `<td>${t.nome}</td><td>${t.categoria||'-'}</td><td>${t.data||''}</td><td>${t.pgto||'-'}</td><td>${fmt(t.valor)}</td><td class="actions-cell"><button data-i="${i}" data-act="del">Excluir</button></td>`;
+          tbodyGastos.appendChild(tr);
+          sumG += Number(t.valor||0);
+        } else {
+          tr.innerHTML = `<td>${t.fonte}</td><td>${t.categoria||'-'}</td><td>${t.data||''}</td><td>${fmt(t.valor)}</td><td class="actions-cell"><button data-i="${i}" data-act="del">Excluir</button></td>`;
+          tbodyRendas.appendChild(tr);
+          sumR += Number(t.valor||0);
+        }
+      });
+      $('#totalGastos').textContent = fmt(sumG);
+      $('#totalRendas').textContent = fmt(sumR);
+      $('#tot-despesas').textContent = fmt(sumG);
+      $('#tot-rendas').textContent = fmt(sumR);
+      $('#saldo').textContent = fmt(sumR - sumG);
+
+      // bind delete
+      document.querySelectorAll('button[data-act="del"]').forEach(b=> b.addEventListener('click', e=>{
+        const idx = Number(e.currentTarget.dataset.i);
+        const arr = load(); arr.splice(idx,1); save(arr); render();
+      }));
+    }
+
+    form.addEventListener('submit', e=>{
+      e.preventDefault();
+      const tipo = panelRend.hidden ? 'despesa' : 'renda';
+      const arr = load();
+      if(tipo==='despesa'){
+        const nome = $('#nome').value.trim();
+        const categoria = $('#cat').value;
+        const valor = Number($('#valor').value) || 0;
+        const pgto = $('#pgto').value;
+        const data = $('#data').value;
+        if(!nome || !valor) return alert('Preencha nome e valor da despesa.');
+        arr.push({tipo,nome,categoria,valor,pgto,data});
+      } else {
+        const fonte = $('#fonte').value.trim();
+        const categoria = Array.from(document.querySelectorAll('input[name="catRenda"]')).find(r=>r.checked)?.value || '';
+        const valor = Number($('#valorRenda').value) || 0;
+        const data = $('#dataRenda').value;
+        if(!fonte || !valor) return alert('Preencha fonte e valor da renda.');
+        arr.push({tipo,fonte,categoria,valor,data});
+      }
+      save(arr); form.reset(); render();
+    });
+
+    // clear all
+    $('#btn-clearAll').addEventListener('click', ()=>{
+      if(confirm('Tem certeza que deseja apagar todas as transações?')){
+        localStorage.removeItem(STORAGE_KEY); render();
+      }
+    });
+
+    // export csv
+    $('#btn-export').addEventListener('click', ()=>{
+      const all = load();
+      if(!all.length) return alert('Não há transações para exportar.');
+      const header = Object.keys(all[0]);
+      const rows = all.map(r=> header.map(h=> (r[h] ?? '').toString().replace(/"/g,'""')));
+      const csv = [header.join(','), ...rows.map(r=> r.map(c=> `"${c}"`).join(','))].join('\n');
+      const blob = new Blob([csv],{type:'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'transacoes_smartmoney.csv'; a.click(); URL.revokeObjectURL(url);
+    });
+
+    // initial render
+    render();
+  </script>
+</body>
+</html>

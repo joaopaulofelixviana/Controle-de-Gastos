@@ -1,0 +1,246 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+  /* Cores Base - Modernas e Limpas */
+  --cor-preto: #000000; /* Texto/Ícones (Slate) - Mais suave que preto puro */
+  --cor-branco: #ffffff; /* Pure White para Cartões e Elementos Principais */
+  
+  --cor-fundo-body: #F0F2F5; /* Fundo Suave e Moderno (Soft Grey) */
+  --cor-fundo-principal: var(--cor-branco); /* Fundo de Conteúdo Principal (Pure White) */
+  
+  /* Cor Primária da Marca (Confiança, Profissional - Deep Navy) */
+  --cor-azul: #2C3E50; 
+  
+  /* Cor de Destaque Secundária (Vibrante, Modernidade - Teal) */
+  --cor-azul-claro: #1ABC9C; 
+
+  /* Cores de Status para Dados Financeiros */
+  --cor-sucesso: #2ECC71; /* Green para Renda/Positivo */
+  --cor-perigo: #E74C3C; /* Red/Coral para Despesa/Negativo */
+
+  --fonte: "Poppins", Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 99.5vw;
+  min-height: 100vh;
+  font-family: var(--fonte);
+  background-color: var(--cor-fundo-body);
+  overflow-x: hidden;
+  color: var(--cor-preto); /* Aplicando a cor de texto moderna */
+}
+
+/* ------------------ CABEÇALHO / SIDEBAR (Mobile) ------------------ */
+
+.cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0.8rem 1rem;
+  background-color: var(--cor-azul);
+  color: var(--cor-branco);
+  margin: 0.5rem 0.5rem 0 0.5rem;
+  border-radius: 8px 8px 0 0; /* Arredondamento mais suave */
+  transition: all 0.3s ease;
+  position: relative;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave para o cabeçalho */
+}
+
+.cabecalho__titulo {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.cabecalho__titulo:hover {
+  text-decoration: underline;
+}
+
+.cabecalho__menu {
+  cursor: pointer;
+  padding: 0.4rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.cabecalho__menu:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.cabecalho__navegacao {
+  display: none;
+}
+
+.cabecalho-clicado {
+  display: block;
+  position: absolute;
+  top: 100%; /* Abaixo do cabeçalho */
+  right: 0;
+  width: 100%;
+  background-color: var(--cor-azul);
+  padding: 0.5rem 0;
+  z-index: 10;
+  border-radius: 0 0 8px 8px;
+}
+
+.cabecalho-clicado > ul{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 1rem;
+}
+
+.cabecalho-clicado a{
+    display: block;
+    color: var(--cor-branco);
+    text-decoration: none;
+    padding: .7rem;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.cabecalho-clicado a:hover,
+.cabecalho-clicado a[aria-current="page"] {
+    background-color: var(--cor-azul-claro); /* Teal de destaque no menu */
+}
+
+/* ------------------ PRINCIPAL / CONTEÚDO ------------------ */
+
+.principal {
+  margin: 0 0.5rem;
+  background-color: var(--cor-fundo-principal);
+  padding: 1.5rem;
+  transition: margin 0.3s ease;
+}
+
+.principal__data {
+  font-size: 0.8rem;
+  text-align: end;
+  color: var(--cor-preto);
+  margin-bottom: 1rem;
+}
+
+.principal__titulo,
+.resumo__titulo, .graficos__titulo {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--cor-azul);
+}
+
+.principal__valores {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.valores__container {
+    background-color: var(--cor-branco);
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.08); /* Sombra mais suave */
+    transition: all 0.3s ease;
+    border-left: 5px solid var(--cor-azul);
+}
+
+.valores__container:hover {
+    box-shadow: 0 6px 16px rgba(44, 62, 80, 0.15); /* Efeito de elevação sutil */
+}
+
+.valor,
+strong {
+  font-weight: 700;
+}
+
+/* Cores de status aplicadas aos valores */
+.valor.renda {
+    color: var(--cor-sucesso);
+}
+
+.valor.despesa {
+    color: var(--cor-perigo);
+}
+
+.valor.saldo {
+    color: var(--cor-azul); /* Cor principal para saldo neutro */
+}
+
+.principal__graficos {
+  width: 100%;
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: var(--cor-branco);
+  box-shadow: 0 4px 12px rgba(44, 62, 80, 0.1);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.graficos__titulo {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+canvas {
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.grafico__pizza {
+  max-width: 300px !important;
+  margin: auto;
+  height: 200px;
+}
+
+.principal__resumo {
+    padding: 1rem 0;
+}
+
+.principal__resumo p {
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* Cores de status no resumo */
+.status-saldo {
+    font-weight: 700;
+    color: var(--cor-sucesso);
+}
+
+.status-saldo.negativo {
+    color: var(--cor-perigo);
+}
+
+
+/* ------------------ RODAPÉ ------------------ */
+
+.rodape {
+  background-color: var(--cor-azul);
+  margin: 0 0.5rem 0.5rem 0.5rem;
+  padding: 0.5rem;
+  color: var(--cor-branco);
+  text-align: center;
+  border-radius: 0 0 8px 8px;
+  transition: margin 0.3s ease;
+  height: 30px;
+}
+
+.rodape > p > a {
+  color: var(--cor-azul-claro); /* Cor de destaque para o link */
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.rodape > p > a:hover {
+  text-decoration: underline;
+}

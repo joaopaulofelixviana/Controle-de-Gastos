@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meu Perfil</title>
+
+  <!-- Fontes e ícones -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+  <style>
+    :root{
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --accent:#0b5fff;
+      --accent-600:#074ad6;
+      --danger:#d14343;
+      --success:#2f9e44;
+      --glass:rgba(11,95,255,0.06);
+      --radius:12px;
+
+      font-family:'Inter',sans-serif;
+      color-scheme:light;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      background:linear-gradient(180deg,var(--bg),#eef2f7);
+      padding:32px 16px;
+      display:flex;
+      justify-content:center;
+      color:#111827;
+    }
+
+    .app{
+      width:100%;
+      max-width:1000px;
+    }
+
+    header.header{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      margin-bottom:20px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .logo{
+      width:56px;
+      height:56px;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-600));
+      display:grid;
+      place-items:center;
+      color:white;
+      font-weight:700;
+      font-size:20px;
+    }
+    .header-actions{
+      margin-left:auto;
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .btn{
+      padding:10px 14px;
+      border-radius:8px;
+      border:1px solid #e6e9ef;
+      background:white;
+      cursor:pointer;
+    }
+    .btn.primary{
+      background:var(--accent);
+      border:none;
+      color:white;
+    }
+
+    nav.nav{
+      margin-top:8px;
+      display:flex;
+      gap:12px;
+      padding-bottom:22px;
+    }
+    nav.nav a{
+      padding:8px 12px;
+      text-decoration:none;
+      color:var(--muted);
+      border-radius:8px;
+      font-size:14px;
+    }
+    nav.nav a.active{
+      background:var(--card);
+      color:var(--accent);
+      font-weight:600;
+      box-shadow:0 6px 18px rgba(11,95,255,0.06);
+    }
+
+    main{
+      display:flex;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:20px;
+      box-shadow:0 8px 22px rgba(16,24,40,0.06);
+      flex:1;
+      min-width:290px;
+    }
+
+    h2{
+      margin-bottom:12px;
+      font-size:20px;
+    }
+
+    .profile-top{
+      display:flex;
+      gap:20px;
+      align-items:center;
+      margin-bottom:20px;
+    }
+    .avatar{
+      width:86px;
+      height:86px;
+      border-radius:50%;
+      background:#d6e2ff;
+      display:grid;
+      place-items:center;
+      font-size:32px;
+      font-weight:700;
+      color:#074ad6;
+    }
+
+    label{
+      font-size:13px;
+      color:var(--muted);
+      display:block;
+      margin-bottom:6px;
+    }
+    input,select{
+      width:100%;
+      padding:10px;
+      border-radius:8px;
+      border:1px solid #e6e9ef;
+      background:white;
+      margin-bottom:14px;
+    }
+
+    .section-title{
+      margin-top:12px;
+      color:var(--muted);
+      font-size:13px;
+      font-weight:600;
+      text-transform:uppercase;
+    }
+
+    .danger-zone{
+      border:1px solid rgba(209,67,67,0.15);
+      padding:14px;
+      border-radius:10px;
+      background:rgba(209,67,67,0.03);
+      margin-top:20px;
+    }
+    .danger-btn{
+      background:var(--danger);
+      color:white;
+      border:none;
+      padding:10px 14px;
+      border-radius:8px;
+      cursor:pointer;
+      margin-top:10px;
+    }
+
+    footer{
+      margin-top:20px;
+      text-align:center;
+      font-size:12px;
+      color:var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="brand">
+      <div class="logo">SM</div>
+      <div>
+        <h1>Smart Money</h1>
+        <div style="color:var(--muted);font-size:13px">Gestão financeira</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="../index.html">Dashboard</a>
+    <a href="tabelas-graficos.html">Transações</a>
+    <a class="active" href="#">Meu Perfil</a>
+    <a href="#">Mensagens</a>
+    <a href="#">Configurações</a>
+  </nav>
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- CARD - PERFIL -->
+    <div class="card">
+      <h2>Meu Perfil</h2>
+
+      <div class="profile-top">
+        <div class="avatar">JP</div>
+        <button class="btn">Alterar foto</button>
+      </div>
+
+      <label>Nome completo</label>
+      <input id="nome" value="João Paulo Félix Viana">
+
+      <label>Email</label>
+      <input id="email" value="joao.paulo@example.com">
+
+      <label>Telefone</label>
+      <input id="tel" placeholder="(00) 00000-0000">
+
+      <button class="btn primary" style="margin-top:8px">Salvar alterações</button>
+    </div>
+
+    <!-- CARD - SEGURANÇA -->
+    <div class="card">
+      <h2>Segurança</h2>
+
+      <label>Senha atual</label>
+      <input type="password">
+
+      <label>Nova senha</label>
+      <input type="password">
+
+      <label>Confirmar senha</label>
+      <input type="password">
+
+      <button class="btn primary">Atualizar senha</button>
+
+      <div class="danger-zone">
+        <strong style="color:var(--danger)">Zona de Perigo</strong>
+        <p style="font-size:13px;color:var(--muted);margin:6px 0 0">
+          Excluir sua conta removerá todos os dados permanentemente.
+        </p>
+        <button class="danger-btn">Excluir conta</button>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    Feito por <a href="https://github.com/joaopaulofelixviana">João Paulo</a> — © Smart Money
+  </footer>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+@charset "UTF-8";
+
+@media screen and (width >= 850px) {
+    body{
+        display: grid;
+        grid-template-areas: 
+        'header main main'
+        'header main main'
+        'footer footer footer'
+        ;
+        grid-template-columns: 250px 1fr; /* Coluna lateral de 250px */
+    }
+
+    .cabecalho{
+        grid-area: header;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 150px;
+        margin: .5rem 0 0 .5rem;
+        padding-top: 2rem;
+        border-radius: 8px 0 0 8px; /* Borda ajustada para Sidebar */
+        text-align: center;
+        min-height: 98vh; /* Sidebar ocupa a altura total */
+    }
+    
+    .cabecalho__titulo {
+        font-size: 1.7rem;
+    }
+
+    .cabecalho__menu {
+        display: none;
+    }
+
+    .cabecalho__navegacao{
+        display: block;
+    }
+
+    .cabecalho__navegacao > ul{
+        display: flex;
+        color: var(--cor-branco);
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .cabecalho__navegacao a{
+        display: block;
+        color: var(--cor-branco);
+        text-decoration: none;
+        padding: .7rem 1rem;
+        border-radius: 6px;
+        transition: background-color 0.2s;
+        text-align: left;
+    }
+
+    .cabecalho__navegacao a:hover{
+        background-color: var(--cor-azul-claro);
+    }
+    
+    .cabecalho__navegacao a[aria-current="page"] {
+        background-color: var(--cor-azul-claro);
+        font-weight: 600;
+    }
+
+    .principal {
+        grid-area: main;
+        margin: .5rem .5rem 0 0;
+        border-radius: 8px;
+    }
+
+    .principal__valores{
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0 1rem;
+    }
+
+    .valores__container {
+        flex-grow: 1;
+        min-width: 200px;
+        max-width: 30%;
+    }
+
+    .valor{
+        display: block;
+        margin-top: 5px;
+        text-align: center;
+        font-size: 1.2rem;
+    }
+    
+    .principal__graficos {
+        max-width: 90%;
+    }
+
+    .rodape {
+        grid-area: footer;
+        margin: 0;
+        border-radius: 0 0 8px 0;
+    }
+}

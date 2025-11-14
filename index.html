@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard • Smart Money</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+  <style>
+    :root{
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --accent:#0b5fff;
+      --accent-600:#074ad6;
+      --glass:rgba(11,95,255,0.06);
+      --radius:12px;
+
+      font-family:'Inter',sans-serif;
+      color-scheme:light;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      background:linear-gradient(180deg,var(--bg),#eef2f7);
+      padding:32px 16px;
+      display:flex;
+      justify-content:center;
+      color:#111827;
+    }
+
+    .app{
+      width:100%;
+      max-width:1000px;
+    }
+
+    /* HEADER */
+    header.header{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      margin-bottom:20px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .logo{
+      width:56px;
+      height:56px;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-600));
+      display:grid;
+      place-items:center;
+      color:white;
+      font-weight:700;
+      font-size:20px;
+    }
+
+    /* NAV */
+    nav.nav{
+      margin-top:8px;
+      display:flex;
+      gap:12px;
+      padding-bottom:22px;
+    }
+    nav.nav a{
+      padding:8px 12px;
+      text-decoration:none;
+      color:var(--muted);
+      border-radius:8px;
+      font-size:14px;
+    }
+    nav.nav a.active{
+      background:var(--card);
+      color:var(--accent);
+      font-weight:600;
+      box-shadow:0 6px 18px rgba(11,95,255,0.06);
+    }
+
+    main{
+      display:flex;
+      flex-wrap:wrap;
+      gap:20px;
+    }
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:20px;
+      box-shadow:0 8px 22px rgba(16,24,40,0.06);
+      flex:1;
+      min-width:290px;
+    }
+    h2{
+      margin-bottom:12px;
+      font-size:20px;
+    }
+
+    .value{
+      font-size:28px;
+      font-weight:700;
+      margin-top:6px;
+      color:var(--accent-600);
+    }
+    .muted{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .list{
+      margin-top:12px;
+    }
+    .item{
+      padding:10px 0;
+      border-bottom:1px solid #eef0f4;
+      display:flex;
+      justify-content:space-between;
+    }
+    .tag{
+      font-size:12px;
+      background:var(--glass);
+      padding:4px 8px;
+      border-radius:8px;
+      color:var(--accent);
+    }
+
+    footer{
+      margin-top:20px;
+      text-align:center;
+      font-size:12px;
+      color:var(--muted);
+    }
+  </style>
+
+</head>
+<body>
+
+<div class="app">
+
+  <header class="header">
+    <div class="brand">
+      <div class="logo">SM</div>
+      <div>
+        <h1>Smart Money</h1>
+        <div style="color:var(--muted);font-size:13px">Gestão financeira</div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="nav">
+    <a class="active" href="#">Dashboard</a>
+    <a href="paginas/tabelas-graficos.html">Transações</a>
+    <a href="paginas/perfil.html">Meu Perfil</a>
+    <a href="#">Mensagens</a>
+    <a href="#">Configurações</a>
+  </nav>
+
+  <main>
+
+    <div class="card">
+      <h2>Resumo financeiro</h2>
+
+      <div class="muted">Saldo atual</div>
+      <div class="value" id="saldoAtual">R$ 0,00</div>
+
+      <div class="muted" style="margin-top:20px;">Gastos do mês</div>
+      <div class="value" id="gastosMes" style="color:#d14343">R$ 0,00</div>
+    </div>
+
+    <div class="card">
+      <h2>Últimas transações</h2>
+
+      <div class="list"></div>
+
+      <a href="paginas/tabelas-graficos.html" style="display:block;margin-top:12px;font-size:13px;color:var(--accent);text-decoration:none;">
+        Ver todas as transações →
+      </a>
+    </div>
+
+  </main>
+
+  <footer>
+    Feito por <a href="https://github.com/joaopaulofelixviana">João Paulo</a> — © Smart Money
+  </footer>
+
+</div>
+
+<script>
+
+  /* ---------------------------------------
+        BANCO DE DADOS LOCAL
+  ---------------------------------------- */
+  let transacoes = JSON.parse(localStorage.getItem("transacoes")) || [
+    { id: 1, nome: "Mercado", valor: -120 },
+    { id: 2, nome: "Salário", valor: 3000 },
+    { id: 3, nome: "Academia", valor: -89 }
+  ];
+
+  function salvarBD() {
+    localStorage.setItem("transacoes", JSON.stringify(transacoes));
+  }
+
+  /* ---------------------------------------
+        CALCULAR RESUMO
+  ---------------------------------------- */
+  function atualizarResumo() {
+    const saldo = transacoes.reduce((acc, t) => acc + t.valor, 0);
+    const gastos = transacoes
+      .filter(t => t.valor < 0)
+      .reduce((acc, t) => acc + t.valor, 0);
+
+    document.querySelector("#saldoAtual").innerText =
+      "R$ " + saldo.toLocaleString("pt-BR");
+
+    document.querySelector("#gastosMes").innerText =
+      "R$ " + Math.abs(gastos).toLocaleString("pt-BR");
+  }
+
+  /* ---------------------------------------
+        ATUALIZAR LISTA NO DASHBOARD
+  ---------------------------------------- */
+  function atualizarDashboard() {
+    const lista = document.querySelector(".list");
+
+    lista.innerHTML = "";
+
+    transacoes.slice(0, 3).forEach(t => {
+      let tagColor = t.valor >= 0
+        ? "color:#2f9e44;background:rgba(47,158,68,0.08)"
+        : "";
+
+      lista.innerHTML += `
+        <div class="item">
+          <span>${t.nome}</span>
+          <span class="tag" style="${tagColor}">
+            ${t.valor >= 0 ? "+ " : "- "} R$ ${Math.abs(t.valor)}
+          </span>
+        </div>
+      `;
+    });
+  }
+
+  atualizarResumo();
+  atualizarDashboard();
+
+  /* ---------------------------------------
+       FUNÇÃO VER TODAS AS TRANSAÇÕES
+  ---------------------------------------- */
+  function verTransacoes() {
+    window.location.href = "paginas/tabelas-graficos.html";
+  }
+
+</script>
+
+</body>
+</html>
